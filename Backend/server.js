@@ -6,7 +6,15 @@ import userrouter from './routes/userRoutes.js';
 import imageRouter from './routes/imageRoutes.js';
 const PORT=process.env.PORT|| 4000
 const app=express()
-app.use(cors())
+app.use(
+  cors({
+    origin: [
+      "http://localhost:5173",
+      "https://imagify-lac.vercel.app/"
+    ],
+    credentials: true
+  })
+);
 app.use(express.json())
 await connectDB()
 app.use('/api/user',userrouter)
