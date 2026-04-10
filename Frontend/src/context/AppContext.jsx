@@ -7,7 +7,7 @@ const AppContextProvider=(props)=>{
      const [user,setUser]=useState(null)
      const [showLogin,setShowLogin]=useState(false )
       const [credit,setCredit]=useState(false)
-     const backendUrl=import.meta.env.VITE_BACKEND_URL
+     const backendUrl=import.meta.env.VITE_BACKEND_URL || 'https://imagify-u5gt.onrender.com'
      const token=localStorage.getItem('token')
      const logout=()=>{
       localStorage.removeItem('token')
