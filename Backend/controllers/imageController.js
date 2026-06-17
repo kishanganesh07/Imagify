@@ -1,7 +1,9 @@
 import axios from "axios"
 import userModel from "../models/userModel.js"
 import FormData from "form-data"
-const generateImage=async(req,res)=>{
+import { processImage } from '../services/imageOptimizer.js';
+import { uploadToCloudinary } from '../services/cloudinary.js';
+export const generateImage=async(req,res)=>{
     try{
         const {userId,prompt}=req.body
         const user=await userModel.findById(userId)
@@ -29,4 +31,40 @@ res.json({success:true,message:"Image Generated",creditBalance:user.creditBalanc
         res.status(500).json({success:false,message:"Image generation failed. Please try again."})
     }
     }
-export default generateImage
+
+export const optimizeImage = async (req, res) => {
+    try {
+        const { mode } = req.body;
+        // req.file is provided by multer
+        if (!req.file) {
+            return res.status(400).json({ success: false, message: "No image file provided" });
+        }
+
+        // 1. Process image with sharp
+        const processedData = await processImage(req.file.buffer, mode);
+
+        // 2. Upload to Cloudinary (if keys are missing, we skip and return base64 instead to prevent crashes locally)
+        let resultUrl = '';
+        if (process.env.CLOUDINARY_API_KEY) {
+            const uploadResult = await uploadToCloudinary(processedData.buffer);
+            resultUrl = uploadResult.secure_url;
+        } else {
+            // Fallback for local testing without cloudinary
+            const base64 = processedData.buffer.toString('base64');
+            resultUrl = `data:image/${processedData.format};base64,${base64}`;
+        }
+
+        res.json({
+            success: true,
+            message: "Image Optimized!",
+            originalSizeKB: (processedData.originalSize / 1024).toFixed(2),
+            newSizeKB: (processedData.newSize / 1024).toFixed(2),
+            reductionRatio: processedData.reductionRatio + '%',
+            resultUrl
+        });
+
+    } catch (error) {
+        console.error("Optimization Error:", error);
+        res.status(500).json({ success: false, message: "Image optimization failed." });
+    }
+};

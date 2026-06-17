@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify';
 import Home from './pages/Home'
 import Result from './pages/Result'
+import OptimizerStudio from './pages/OptimizerStudio'
 // import BuyCredit from './pages/BuyCredit'
 import Navbar from './Components/Navbar'
 import Footer from './Components/Footer'
@@ -20,6 +21,7 @@ const AppContent = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/result" element={<Result />} />
+          <Route path="/studio" element={<OptimizerStudio />} />
           {/* <Route path="/buy" element={<BuyCredit />} /> */}
         </Routes>
         <Footer/>

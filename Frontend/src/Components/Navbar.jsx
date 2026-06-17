@@ -16,6 +16,9 @@ const Navbar = () => {
         
         {user ?  <div>
             <div className='flex items-center gap-2 sm:gap-3 '>
+                <Link to="/studio" className='flex items-center gap-2 bg-violet-100 px-4 sm:px-6 py-1.5 sm:py-3 rounded-full hover:scale-105 transition-all text-violet-700 font-bold text-xs sm:text-sm mr-2'>
+                   ✨ Studio
+                </Link>
                 <button className='flex items-center gap-2 bg-blue-100 px-4 sm:px-6 py-1.5 sm:py-3 rounded-full hover:scale-105 transition-all duration-700  '>
                     <img className='w-5' src={assets.credit_star} alt="" />
                     <p className='text-xs sm:text-sm font-medium text-grey-600'>Credits Left: {credit}</p>
@@ -32,6 +35,7 @@ const Navbar = () => {
             </div>
         </div>:
         <div className='flex items-center gap-2 sm:gap-5'>
+            <Link to="/studio" className='text-violet-600 font-bold cursor-pointer hover:underline'>✨ Studio</Link>
             {/* <p onClick={()=>navigate('/buy')} className='cursor-pointer '>Pricing</p> */}
             <button className='bg-zinc-800 text-white px-5 py-2 sm:px-2 text-sm rounded-full cursor-pointer' onClick={()=>setShowLogin(true)}>Login</button>
 
