@@ -3,34 +3,51 @@ import userModel from "../models/userModel.js"
 import FormData from "form-data"
 import { processImage } from '../services/imageOptimizer.js';
 import { uploadToCloudinary } from '../services/cloudinary.js';
-export const generateImage=async(req,res)=>{
-    try{
-        const {userId,prompt}=req.body
-        const user=await userModel.findById(userId)
-        if(!user||!prompt){
-            return res.status(400).json({success:false,message:"Missing Details"})
-            }
-        if(user.creditBalance===0 || userModel.creditBalance<0){
-            return res.json({success: false,creditBalance:user.creditBalance,message:"Insufficient Credits"})
+export const generateImage = async (req, res) => {
+    try {
+        const { userId, prompt } = req.body;
+        const user = await userModel.findById(userId);
+        if (!user || !prompt) {
+            return res.status(400).json({ success: false, message: "Missing Details" });
         }
-        const formData=new FormData()
-        formData.append("prompt",prompt)
-     const {data}= await axios.post("https://clipdrop-api.co/text-to-image/v1",formData,
-    {
-        headers: {
-    'x-api-key': process.env.CLIPDROP_API,
-  },responseType:'arraybuffer'}
-  
-)
-const base64Image=Buffer.from(data,'binary').toString('base64')
-const resultImage=`data:image/png;base64,${base64Image} `
-await userModel.findByIdAndUpdate(user._id,{creditBalance:user.creditBalance -1})
-res.json({success:true,message:"Image Generated",creditBalance:user.creditBalance-1,resultImage})
-    }catch(error){
-        console.log(error)
-        res.status(500).json({success:false,message:"Image generation failed. Please try again."})
+        
+        // Admin bypass
+        const isAdmin = user.role === "admin";
+        if (!isAdmin && (user.creditBalance === 0 || user.creditBalance < 0)) {
+            return res.json({ success: false, creditBalance: user.creditBalance, message: "Insufficient Credits" });
+        }
+        
+        const { data } = await axios.post(
+            "https://api.openai.com/v1/images/generations",
+            {
+                prompt: prompt,
+                n: 1,
+                size: "1024x1024",
+                response_format: "b64_json"
+            },
+            {
+                headers: {
+                    'Authorization': `Bearer ${process.env.CHATGPT_API_KEY}`,
+                    'Content-Type': 'application/json'
+                }
+            }
+        );
+        
+        const base64Image = data.data[0].b64_json;
+        const resultImage = `data:image/png;base64,${base64Image}`;
+        
+        let newBalance = user.creditBalance;
+        if (!isAdmin) {
+            newBalance -= 1;
+            await userModel.findByIdAndUpdate(user._id, { creditBalance: newBalance });
+        }
+        
+        res.json({ success: true, message: "Image Generated", creditBalance: newBalance, resultImage });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ success: false, message: "Image generation failed. Please try again." });
     }
-    }
+};
 
 export const optimizeImage = async (req, res) => {
     try {

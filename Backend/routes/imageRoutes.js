@@ -6,6 +6,6 @@ import upload from "../middlewares/upload.js";
 const imageRouter = express.Router();
 
 imageRouter.post('/generate-image', userAuth, generateImage);
-imageRouter.post('/optimize', userAuth, upload.single('image'), optimizeImage);
+imageRouter.post('/optimize', upload.single('image'), userAuth, optimizeImage);
 
 export default imageRouter;

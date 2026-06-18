@@ -1,8 +1,273 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700;800&display=swap');
 @import "tailwindcss";
 
-
-
-*{
-  font-family: outfit;
+/* =============================================
+   DESIGN TOKENS — DARK MODE (default)
+   ============================================= */
+:root {
+  --bg-primary:    #070B14;
+  --bg-secondary:  #0d1120;
+  --bg-card:       rgba(255,255,255,0.03);
+  --bg-card-hover: rgba(255,255,255,0.06);
+  --border-subtle: rgba(255,255,255,0.08);
+  --border-hover:  rgba(255,255,255,0.18);
+  --text-primary:  #f8fafc;
+  --text-secondary:#94a3b8;
+  --text-muted:    #475569;
+  --shadow-sm:     0 1px 3px rgba(0,0,0,0.4);
+  --shadow-md:     0 4px 16px rgba(0,0,0,0.5);
+  --shadow-lg:     0 8px 40px rgba(0,0,0,0.6);
+  --glow-orange:   rgba(249,115,22,0.35);
+  --glass-bg:      rgba(255,255,255,0.03);
+  --glass-border:  rgba(255,255,255,0.08);
+  --input-bg:      rgba(0,0,0,0.25);
+  --input-border:  rgba(255,255,255,0.1);
+  --navbar-bg:     rgba(7,11,20,0.85);
+  --footer-bg:     rgba(13,17,32,0.9);
+  --scrollbar-track: #0f172a;
+  --scrollbar-thumb: #334155;
+  --logo-filter:   invert(1) opacity(0.9);
 }
+
+/* =============================================
+   GLOBAL HIGHLIGHT
+   ============================================= */
+::selection {
+  background: rgba(249, 115, 22, 0.3); /* orange-500 with 30% opacity */
+  color: inherit;
+}
+
+/* =============================================
+   LIGHT MODE TOKENS
+   ============================================= */
+.light {
+  --bg-primary:    #f0f4ff;
+  --bg-secondary:  #e8eeff;
+  --bg-card:       rgba(255,255,255,0.85);
+  --bg-card-hover: rgba(255,255,255,1);
+  --border-subtle: rgba(100,90,200,0.12);
+  --border-hover:  rgba(100,90,200,0.3);
+  --text-primary:  #0f172a;
+  --text-secondary:#334155;
+  --text-muted:    #64748b;
+  --shadow-sm:     0 1px 4px rgba(100,90,200,0.08);
+  --shadow-md:     0 4px 20px rgba(100,90,200,0.12);
+  --shadow-lg:     0 8px 40px rgba(100,90,200,0.16);
+  --glow-orange:   rgba(194,65,12,0.2);
+  --glass-bg:      rgba(255,255,255,0.75);
+  --glass-border:  rgba(194,65,12,0.12);
+  --input-bg:      rgba(255,255,255,0.9);
+  --input-border:  rgba(194,65,12,0.2);
+  --navbar-bg:     rgba(240,244,255,0.9);
+  --footer-bg:     rgba(224,231,255,0.95);
+  --scrollbar-track: #e2e8f0;
+  --scrollbar-thumb: #a5b4fc;
+  --logo-filter:   none;
+}
+
+/* =============================================
+   BASE STYLES
+   ============================================= */
+* {
+  font-family: 'Inter', 'Space Grotesk', sans-serif;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* =============================================
+   UTILITY CLASSES
+   ============================================= */
+@utility glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  transition: background 0.3s ease, border-color 0.3s ease;
+}
+
+@utility glass-hover {
+  &:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--border-hover);
+    box-shadow: var(--shadow-md);
+  }
+}
+
+@utility glass-input {
+  background: var(--input-bg);
+  border: 1px solid var(--input-border);
+  color: var(--text-primary);
+  transition: all 0.3s ease;
+  &::placeholder {
+    color: var(--text-muted);
+  }
+  &:focus {
+    outline: none;
+    border-color: #f97316;
+    box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.15);
+    background: var(--input-bg);
+  }
+}
+
+@utility card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  transition: all 0.3s ease;
+  &:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--border-hover);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+  }
+}
+
+@utility section-heading {
+  color: var(--text-primary);
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+}
+
+@utility text-muted {
+  color: var(--text-secondary);
+}
+
+/* =============================================
+   THEME ANIMATIONS
+   ============================================= */
+@theme {
+  --animate-blob: blob 12s infinite alternate;
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-glow: glow 3s ease-in-out infinite alternate;
+  --animate-shimmer: shimmer 2.5s linear infinite;
+  --animate-pulse-slow: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  --animate-spin-slow: spin 8s linear infinite;
+
+  @keyframes blob {
+    0%   { transform: translate(0px,0px) scale(1); }
+    33%  { transform: translate(30px,-50px) scale(1.1); }
+    66%  { transform: translate(-20px,20px) scale(0.9); }
+    100% { transform: translate(0px,0px) scale(1); }
+  }
+  @keyframes float {
+    0%,100% { transform: translateY(0px); }
+    50%      { transform: translateY(-12px); }
+  }
+  @keyframes glow {
+    from { box-shadow: 0 0 15px -5px rgba(249,115,22,0.5); }
+    to   { box-shadow: 0 0 35px 5px rgba(249,115,22,0.9); }
+  }
+  @keyframes shimmer {
+    0%   { background-position: -200% center; }
+    100% { background-position: 200% center; }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes scaleIn {
+    from { opacity: 0; transform: scale(0.92); }
+    to   { opacity: 1; transform: scale(1); }
+  }
+}
+
+/* =============================================
+   CUSTOM SCROLLBAR
+   ============================================= */
+::-webkit-scrollbar         { width: 6px; }
+::-webkit-scrollbar-track   { background: var(--scrollbar-track); }
+::-webkit-scrollbar-thumb   { background: var(--scrollbar-thumb); border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: #c2410c; }
+
+/* =============================================
+   GRADIENT SHIMMER TEXT
+   ============================================= */
+.gradient-text {
+  background: linear-gradient(135deg, #fb923c 0%, #fbbf24 40%, #fdba74 70%, #fb923c 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 3s linear infinite;
+}
+
+.light .gradient-text {
+  background: linear-gradient(135deg, #ea580c 0%, #d97706 40%, #ea580c 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* =============================================
+   THEME TOGGLE BUTTON
+   ============================================= */
+.theme-toggle {
+  position: relative;
+  width: 52px;
+  height: 28px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #ea580c, #d97706);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: none;
+  outline: none;
+  box-shadow: 0 2px 8px rgba(109, 40, 217, 0.4);
+}
+.theme-toggle::after {
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: white;
+  transition: transform 0.3s ease;
+}
+.light .theme-toggle::after {
+  transform: translateX(24px);
+}
+
+/* =============================================
+   HERO SECTION NOISE OVERLAY
+   ============================================= */
+.noise-overlay {
+  position: absolute;
+  inset: 0;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* =============================================
+   GLOW ORBS (background decoration)
+   ============================================= */
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  pointer-events: none;
+  opacity: 0.25;
+}
+.light .orb { opacity: 0.12; }
+
+/* =============================================
+   FADE IN ANIMATION
+   ============================================= */
+.fade-in  { animation: fadeIn 0.5s ease-out forwards; }
+.slide-up { animation: slideUp 0.6s ease-out forwards; }
+.scale-in { animation: scaleIn 0.4s ease-out forwards; }
