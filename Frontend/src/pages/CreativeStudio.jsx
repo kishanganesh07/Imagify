@@ -161,17 +161,17 @@ const CreativeStudio = () => {
 
     return (
         <div className="max-w-[1400px] mx-auto py-8 sm:py-12 px-4 sm:px-6 animate-[fadeIn_0.5s_ease-out]">
-            <h1 className="text-3xl sm:text-5xl font-extrabold mb-10 text-center flex items-center justify-center gap-3 text-white tracking-tight">
+            <h1 className="text-3xl sm:text-5xl font-extrabold mb-10 text-center flex items-center justify-center gap-3 text-[var(--text-primary)] tracking-tight">
                 <ImageIcon className="text-orange-500 w-8 h-8 sm:w-12 sm:h-12 drop-shadow-[0_0_15px_rgba(249,115,22,0.5)]"/> Creative Studio
             </h1>
 
             {/* Tabs */}
-            <div className="flex flex-wrap justify-center gap-2 mb-10 glass p-2 rounded-2xl w-fit mx-auto border-white/10 shadow-2xl">
+            <div className="flex flex-wrap justify-center gap-2 mb-10 glass p-2 rounded-2xl w-fit mx-auto border-[var(--border-subtle)] shadow-2xl">
                 {TOOLS.map(tool => (
                     <button 
                         key={tool.id} 
                         onClick={() => { setActiveTab(tool.id); setResult(null); setStatus('idle'); }}
-                        className={`flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-bold transition-all duration-300 cursor-pointer ${activeTab === tool.id ? 'bg-gradient-to-r from-orange-600 to-amber-600 shadow-[0_0_20px_rgba(249,115,22,0.4)] text-white scale-105' : 'text-slate-400 hover:text-white hover:bg-white/5'}`}
+                        className={`flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-bold transition-all duration-300 cursor-pointer ${activeTab === tool.id ? 'bg-gradient-to-r from-orange-600 to-amber-600 shadow-[0_0_20px_rgba(249,115,22,0.4)] text-white scale-105' : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-card-hover)]'}`}
                     >
                         {tool.icon} {tool.label}
                     </button>
@@ -181,25 +181,25 @@ const CreativeStudio = () => {
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10">
                 {/* Control Panel (Left) */}
                 <div className="lg:col-span-4 flex flex-col gap-6">
-                    <div className="glass p-6 sm:p-8 rounded-3xl shadow-2xl border-white/10 relative overflow-hidden">
+                    <div className="glass p-6 sm:p-8 rounded-3xl shadow-2xl border-[var(--border-subtle)] relative overflow-hidden">
                         {/* Decorative Background Glow */}
                         <div className="absolute top-0 right-0 w-64 h-64 bg-orange-600/10 rounded-full blur-[80px] -z-10"></div>
                         
                         {/* Image Uploader for non-Text-to-Image */}
                         {activeTab !== 'text-to-image' && (
                             <div className="mb-8">
-                                <label className="block text-sm font-bold text-white mb-3 tracking-wide">Source Image</label>
-                                <div className="border-2 border-dashed border-white/20 rounded-2xl p-6 flex flex-col items-center justify-center relative hover:bg-white/5 hover:border-orange-500/50 transition-all cursor-pointer min-h-[160px] group bg-black/20">
+                                <label className="block text-sm font-bold text-[var(--text-primary)] mb-3 tracking-wide">Source Image</label>
+                                <div className="border-2 border-dashed border-[var(--border-subtle)] rounded-2xl p-6 flex flex-col items-center justify-center relative hover:bg-[var(--bg-card-hover)] hover:border-orange-500/50 transition-all cursor-pointer min-h-[160px] group bg-[var(--bg-card)]">
                                     <input type="file" accept="image/*" onChange={handleImageUpload} className="absolute inset-0 opacity-0 cursor-pointer z-10" />
                                     {sourceImagePreview ? (
                                         <div className="relative">
-                                            <img src={sourceImagePreview} alt="Preview" className="h-32 object-contain rounded-xl shadow-lg border border-white/10" />
+                                            <img src={sourceImagePreview} alt="Preview" className="h-32 object-contain rounded-xl shadow-lg border border-[var(--border-subtle)]" />
                                             <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity rounded-xl flex items-center justify-center">
                                                 <UploadCloud className="text-white w-8 h-8"/>
                                             </div>
                                         </div>
                                     ) : (
-                                        <div className="text-center text-slate-400 group-hover:text-orange-300 transition-colors">
+                                        <div className="text-center text-[var(--text-secondary)] group-hover:text-orange-500 transition-colors">
                                             <UploadCloud className="w-10 h-10 mx-auto mb-3 opacity-50 group-hover:opacity-100 group-hover:scale-110 transition-all"/>
                                             <p className="text-sm font-medium">Click or drag image here</p>
                                         </div>
@@ -211,7 +211,7 @@ const CreativeStudio = () => {
                         {/* Prompt & Enhancer */}
                         {(activeTab === 'text-to-image' || activeTab === 'image-to-image') && (
                             <div className="mb-8 relative z-10">
-                                <label className="flex justify-between items-center text-sm font-bold text-white mb-3 tracking-wide">
+                                <label className="flex justify-between items-center text-sm font-bold text-[var(--text-primary)] mb-3 tracking-wide">
                                     Prompt
                                     <button 
                                         onClick={handleEnhancePrompt} 
@@ -235,10 +235,10 @@ const CreativeStudio = () => {
                         {/* Templates */}
                         {activeTab === 'text-to-image' && (
                             <div className="mb-8 relative z-10">
-                                <label className="block text-sm font-bold text-white mb-3 tracking-wide">Quick Templates</label>
+                                <label className="block text-sm font-bold text-[var(--text-primary)] mb-3 tracking-wide">Quick Templates</label>
                                 <div className="flex flex-wrap gap-2">
                                     {TEMPLATES.map((t, i) => (
-                                        <button key={i} onClick={() => setPrompt(t.prompt)} className="text-xs px-4 py-2 bg-white/5 border border-white/10 text-slate-300 rounded-xl hover:bg-orange-600/20 hover:border-orange-500/30 hover:text-white transition-all shadow-sm">
+                                        <button key={i} onClick={() => setPrompt(t.prompt)} className="text-xs px-4 py-2 bg-[var(--bg-card)] border border-[var(--border-subtle)] text-[var(--text-secondary)] rounded-xl hover:bg-orange-600/20 hover:border-orange-500/30 hover:text-[var(--text-primary)] transition-all shadow-sm">
                                             {t.label}
                                         </button>
                                     ))}
@@ -250,24 +250,24 @@ const CreativeStudio = () => {
                         {(activeTab === 'text-to-image' || activeTab === 'image-to-image') && (
                             <div className="grid grid-cols-2 gap-4 mb-8 relative z-10">
                                 <div>
-                                    <label className="block text-sm font-bold text-white mb-3 tracking-wide">Style</label>
+                                    <label className="block text-sm font-bold text-[var(--text-primary)] mb-3 tracking-wide">Style</label>
                                     <div className="relative">
                                         <select value={style} onChange={(e) => setStyle(e.target.value)} className="w-full p-3.5 rounded-xl glass-input text-sm appearance-none cursor-pointer">
-                                            {STYLES.map(s => <option key={s} value={s} className="bg-slate-900">{s.charAt(0).toUpperCase() + s.slice(1)}</option>)}
+                                            {STYLES.map(s => <option key={s} value={s} className="bg-[var(--bg-secondary)] text-[var(--text-primary)]">{s.charAt(0).toUpperCase() + s.slice(1)}</option>)}
                                         </select>
-                                        <div className="absolute inset-y-0 right-4 flex items-center pointer-events-none text-slate-400">
+                                        <div className="absolute inset-y-0 right-4 flex items-center pointer-events-none text-[var(--text-secondary)]">
                                             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
                                         </div>
                                     </div>
                                 </div>
                                 {activeTab === 'text-to-image' && (
                                     <div>
-                                        <label className="block text-sm font-bold text-white mb-3 tracking-wide">Aspect Ratio</label>
+                                        <label className="block text-sm font-bold text-[var(--text-primary)] mb-3 tracking-wide">Aspect Ratio</label>
                                         <div className="relative">
                                             <select value={aspectRatio} onChange={(e) => setAspectRatio(e.target.value)} className="w-full p-3.5 rounded-xl glass-input text-sm appearance-none cursor-pointer">
-                                                {ASPECT_RATIOS.map(s => <option key={s} value={s} className="bg-slate-900">{s}</option>)}
+                                                {ASPECT_RATIOS.map(s => <option key={s} value={s} className="bg-[var(--bg-secondary)] text-[var(--text-primary)]">{s}</option>)}
                                             </select>
-                                            <div className="absolute inset-y-0 right-4 flex items-center pointer-events-none text-slate-400">
+                                            <div className="absolute inset-y-0 right-4 flex items-center pointer-events-none text-[var(--text-secondary)]">
                                                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
                                             </div>
                                         </div>
@@ -277,7 +277,7 @@ const CreativeStudio = () => {
                         )}
 
                         {/* Generate Action */}
-                        <div className="pt-6 border-t border-white/10 relative z-10">
+                        <div className="pt-6 border-t border-[var(--border-subtle)] relative z-10">
                             <div className="flex items-center justify-between mb-4">
                                 <label className="flex items-center gap-2 cursor-pointer group">
                                     <div className="relative">
@@ -286,11 +286,11 @@ const CreativeStudio = () => {
                                         <div className={`dot absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition-transform ${isPublic ? 'transform translate-x-4' : ''}`}></div>
                                     </div>
                                     <div className="text-sm">
-                                        <span className={`font-semibold ${isPublic ? 'text-white' : 'text-slate-400 group-hover:text-slate-300'}`}>Public Gallery</span>
+                                        <span className={`font-semibold ${isPublic ? 'text-[var(--text-primary)]' : 'text-[var(--text-secondary)] group-hover:text-[var(--text-primary)]'}`}>Public Gallery</span>
                                     </div>
                                 </label>
                                 <div className="text-sm px-1 flex items-center gap-2">
-                                    <span className="text-slate-400 font-medium">Cost:</span>
+                                    <span className="text-[var(--text-secondary)] font-medium">Cost:</span>
                                     <span className="font-bold text-orange-400 bg-orange-500/10 px-3 py-1 rounded-full border border-orange-500/20 shadow-sm">1 Credit</span>
                                 </div>
                             </div>
@@ -307,7 +307,7 @@ const CreativeStudio = () => {
 
                 {/* Canvas / Result Area (Right) */}
                 <div className="lg:col-span-8 flex flex-col relative z-0">
-                    <div className="glass rounded-3xl p-4 sm:p-6 flex-1 flex flex-col items-center justify-center border-white/10 shadow-2xl min-h-[400px] lg:min-h-[700px] overflow-hidden relative group">
+                    <div className="glass rounded-3xl p-4 sm:p-6 flex-1 flex flex-col items-center justify-center border-[var(--border-subtle)] shadow-2xl min-h-[400px] lg:min-h-[700px] overflow-hidden relative group">
                         
                         {/* Decorative animated mesh behind canvas */}
                         <div className="absolute inset-0 opacity-20 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-orange-900/40 via-slate-900/10 to-transparent -z-10 pointer-events-none"></div>
@@ -325,7 +325,7 @@ const CreativeStudio = () => {
                             <div className="flex flex-col items-center justify-center">
                                 <div className="relative mb-8">
                                     <div className="w-24 h-24 absolute inset-0 bg-orange-600 rounded-full blur-xl animate-pulse opacity-50"></div>
-                                    <div className="w-24 h-24 relative bg-slate-900/50 backdrop-blur-sm rounded-full border-2 border-orange-500/30 flex items-center justify-center">
+                                    <div className="w-24 h-24 relative bg-[var(--bg-secondary)]/50 backdrop-blur-sm rounded-full border-2 border-orange-500/30 flex items-center justify-center">
                                         <ImageIcon className="w-10 h-10 text-orange-400 animate-pulse"/>
                                     </div>
                                     <svg className="absolute -inset-4 w-32 h-32 animate-[spin_4s_linear_infinite]" viewBox="0 0 100 100">
