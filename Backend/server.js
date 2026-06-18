@@ -15,7 +15,8 @@ app.use(
   cors({
     origin: [
       "http://localhost:5173",
-      "https://imagify-lac.vercel.app"
+      "https://imagify-lac.vercel.app",
+      "https://imagify-lime-phi.vercel.app"
     ],
     credentials: true
   })
