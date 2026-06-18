@@ -307,7 +307,7 @@ const CreativeStudio = () => {
 
                 {/* Canvas / Result Area (Right) */}
                 <div className="lg:col-span-8 flex flex-col relative z-0">
-                    <div className="glass rounded-3xl p-4 sm:p-6 flex-1 flex flex-col items-center justify-center border-[var(--border-subtle)] shadow-2xl min-h-[400px] lg:min-h-[700px] overflow-hidden relative group">
+                    <div className="glass rounded-3xl p-4 sm:p-6 flex-1 flex flex-col items-center justify-center border-[var(--border-subtle)] shadow-2xl min-h-[400px] lg:min-h-[550px] overflow-hidden relative group">
                         
                         {/* Decorative animated mesh behind canvas */}
                         <div className="absolute inset-0 opacity-20 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-orange-900/40 via-slate-900/10 to-transparent -z-10 pointer-events-none"></div>
