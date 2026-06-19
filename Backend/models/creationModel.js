@@ -4,7 +4,7 @@ const creationSchema = new mongoose.Schema({
     userId: { type: mongoose.Schema.Types.ObjectId, ref: 'user', required: true },
     slug: { type: String, unique: true, required: true },
     imageUrl: { type: String, required: true }, // Cloudinary secure URL
-    publicId: { type: String, required: true }, // Cloudinary asset ID
+    publicId: { type: String, default: "" }, // Cloudinary asset ID
     beforeImageUrl: { type: String, default: "" }, // For comparison slider
     beforePublicId: { type: String, default: "" },
     prompt: { type: String, default: "" },

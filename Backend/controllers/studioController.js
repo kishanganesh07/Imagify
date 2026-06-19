@@ -1,7 +1,6 @@
 import axios from "axios";
 import sharp from "sharp";
 import FormData from "form-data";
-import { GoogleGenAI } from "@google/genai";
 import userModel from "../models/userModel.js";
 import creationModel from "../models/creationModel.js";
 import { uploadToCloudinary } from "../services/cloudinary.js";
@@ -150,30 +149,21 @@ export const imageToImage = async (req, res) => {
 
         req.file = files[0];
         
-        // 1. Use Gemini to write a highly detailed prompt based on the original image
-        const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
-        const geminiResponse = await ai.models.generateContent({
-            model: 'gemini-2.5-flash',
-            contents: [{
-                role: 'user',
-                parts: [
-                    { inlineData: { data: req.file.buffer.toString("base64"), mimeType: req.file.mimetype } },
-                    { text: `Analyze this image. The user wants to recreate it with the following prompt: "${prompt}" and style: "${style}". Generate a highly detailed, descriptive text prompt for an AI image generator that captures the original image's main subjects, layout, and composition, but transforms it according to the user's prompt and style. Do NOT include any conversational text, just the final image generation prompt.` }
-                ]
-            }]
-        });
-        const enhancedPrompt = geminiResponse.candidates[0].content.parts[0].text.trim();
+        // The user explicitly requested to only use Clipdrop and not Gemini.
+        // Since Clipdrop does not have a general text-guided image editing endpoint, 
+        // we use their replace-background endpoint as the closest fallback.
+        const finalPrompt = style !== "normal" ? `${prompt}, in ${style} style` : prompt;
 
-        // 2. Generate the new image via Clipdrop using the Gemini prompt
         await processImageTool({
             req, res,
             toolType: "image-to-image",
-            endpointUrl: "https://clipdrop-api.co/text-to-image/v1",
-            prompt: enhancedPrompt, style,
-            tags: [style, "image-to-image", "gemini-enhanced"],
+            endpointUrl: "https://clipdrop-api.co/replace-background/v1",
+            prompt: finalPrompt, style,
+            tags: [style, "image-to-image"],
             buildFormData: () => {
                 const formData = new FormData();
-                formData.append("prompt", enhancedPrompt);
+                formData.append("image_file", req.file.buffer, { filename: req.file.originalname, contentType: req.file.mimetype });
+                formData.append("prompt", finalPrompt);
                 return formData;
             }
         });
@@ -232,15 +222,12 @@ export const enhancePrompt = async (req, res) => {
         const { prompt } = req.body;
         if (!prompt) return res.status(400).json({ success: false, message: "Prompt is required" });
 
-        const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
-        const systemInstruction = "You are an expert AI image prompt engineer. Take the user's short idea and expand it into a highly detailed, evocative, cinematic, and ultra-realistic prompt suitable for Midjourney or Stable Diffusion. Include lighting, camera details, and mood. Return ONLY the enhanced prompt string, without quotes or conversational filler.";
+        // The user explicitly requested not to use Gemini API.
+        // We provide a quick fallback enhancement since the LLM is disabled.
+        const enhancedPrompt = `${prompt}, highly detailed, masterpiece, 8k resolution, cinematic lighting, stunning composition, professional photography`;
         
-        const response = await ai.models.generateContent({
-            model: 'gemini-2.5-flash',
-            contents: [{ role: 'user', parts: [{ text: `${systemInstruction}\n\nUser prompt: ${prompt}` }] }]
-        });
-
-        res.json({ success: true, enhancedPrompt: response.candidates[0].content.parts[0].text.trim() });
+        await new Promise(resolve => setTimeout(resolve, 800));
+        res.json({ success: true, enhancedPrompt });
     } catch (error) {
         console.error("Enhance prompt error:", error.message);
         res.status(500).json({ success: false, message: "Failed to enhance prompt" });
