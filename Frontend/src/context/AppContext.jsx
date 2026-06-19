@@ -46,11 +46,11 @@ const AppContextProvider = (props) => {
         }
     };
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(() => {
         if (token) {
             loadCredits();
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [token]);
 
     const value = {

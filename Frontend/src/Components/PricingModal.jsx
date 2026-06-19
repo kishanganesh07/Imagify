@@ -24,7 +24,7 @@ const PLANS = [
     {
         id: 'premium', name: 'Premium', credits: 200, price: 249,
         popular: false, desc: 'For power creators',
-        features: ['200 AI image generations', 'Background removal', 'Image upscaling', 'Priority queue', 'All art styles', 'Prompt enhancer'],
+        features: ['200 AI image generations', 'Background removal', 'Image upscaling', 'Priority queue', 'All art styles'],
     },
 ];
 

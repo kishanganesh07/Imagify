@@ -1,9 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700;800&display=swap');
 @import "tailwindcss";
 
-/* =============================================
-   DESIGN TOKENS — DARK MODE (default)
-   ============================================= */
+/* Dark mode variables (default) */
 :root {
   --bg-primary:    #070B14;
   --bg-secondary:  #0d1120;
@@ -29,17 +27,13 @@
   --logo-filter:   invert(1) opacity(0.9);
 }
 
-/* =============================================
-   GLOBAL HIGHLIGHT
-   ============================================= */
+/* Global text selection */
 ::selection {
   background: rgba(249, 115, 22, 0.3); /* orange-500 with 30% opacity */
   color: inherit;
 }
 
-/* =============================================
-   LIGHT MODE TOKENS
-   ============================================= */
+/* Light mode variables */
 .light {
   --bg-primary:    #f0f4ff;
   --bg-secondary:  #e8eeff;
@@ -65,9 +59,7 @@
   --logo-filter:   none;
 }
 
-/* =============================================
-   BASE STYLES
-   ============================================= */
+/* Base styles */
 * {
   font-family: 'Inter', 'Space Grotesk', sans-serif;
   box-sizing: border-box;
@@ -82,9 +74,18 @@ body {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* =============================================
-   UTILITY CLASSES
-   ============================================= */
+button:not(:disabled), 
+[role="button"]:not(:disabled), 
+a,
+select {
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
+}
+
+/* Utility classes for glassmorphism and cards */
 @utility glass {
   background: var(--glass-bg);
   backdrop-filter: blur(20px);
@@ -140,9 +141,7 @@ body {
   color: var(--text-secondary);
 }
 
-/* =============================================
-   THEME ANIMATIONS
-   ============================================= */
+/* Custom animations */
 @theme {
   --animate-blob: blob 12s infinite alternate;
   --animate-float: float 6s ease-in-out infinite;
@@ -183,17 +182,13 @@ body {
   }
 }
 
-/* =============================================
-   CUSTOM SCROLLBAR
-   ============================================= */
+/* Custom scrollbar styling */
 ::-webkit-scrollbar         { width: 6px; }
 ::-webkit-scrollbar-track   { background: var(--scrollbar-track); }
 ::-webkit-scrollbar-thumb   { background: var(--scrollbar-thumb); border-radius: 10px; }
 ::-webkit-scrollbar-thumb:hover { background: #c2410c; }
 
-/* =============================================
-   GRADIENT SHIMMER TEXT
-   ============================================= */
+/* Shimmering gradient text effect */
 .gradient-text {
   background: linear-gradient(135deg, #fb923c 0%, #fbbf24 40%, #fdba74 70%, #fb923c 100%);
   background-size: 200% auto;
@@ -211,9 +206,7 @@ body {
   background-clip: text;
 }
 
-/* =============================================
-   THEME TOGGLE BUTTON
-   ============================================= */
+/* Theme toggle switch */
 .theme-toggle {
   position: relative;
   width: 52px;
@@ -241,9 +234,7 @@ body {
   transform: translateX(24px);
 }
 
-/* =============================================
-   HERO SECTION NOISE OVERLAY
-   ============================================= */
+/* Background noise and glow effects */
 .noise-overlay {
   position: absolute;
   inset: 0;
@@ -253,9 +244,7 @@ body {
   z-index: 0;
 }
 
-/* =============================================
-   GLOW ORBS (background decoration)
-   ============================================= */
+/* Orb glowing effects */
 .orb {
   position: absolute;
   border-radius: 50%;
@@ -265,9 +254,54 @@ body {
 }
 .light .orb { opacity: 0.12; }
 
-/* =============================================
-   FADE IN ANIMATION
-   ============================================= */
+/* Helper classes for entrance animations */
 .fade-in  { animation: fadeIn 0.5s ease-out forwards; }
 .slide-up { animation: slideUp 0.6s ease-out forwards; }
 .scale-in { animation: scaleIn 0.4s ease-out forwards; }
+
+/* =============================================
+   UNIQUE TOAST NOTIFICATION STYLING
+   ============================================= */
+.Toastify__toast {
+  border-radius: 20px !important;
+  background: var(--bg-card) !important;
+  backdrop-filter: blur(24px) !important;
+  -webkit-backdrop-filter: blur(24px) !important;
+  border: 1px solid var(--border-subtle) !important;
+  color: var(--text-primary) !important;
+  box-shadow: 0 10px 40px -10px rgba(0,0,0,0.5) !important;
+  font-family: 'Space Grotesk', 'Inter', sans-serif !important;
+  padding: 16px !important;
+}
+
+.light .Toastify__toast {
+  box-shadow: 0 10px 40px -10px rgba(100,90,200,0.2) !important;
+}
+
+.Toastify__toast-body {
+  font-weight: 600 !important;
+  font-size: 14px !important;
+  letter-spacing: 0.2px !important;
+}
+
+.Toastify__progress-bar {
+  background: linear-gradient(90deg, #ea580c, #fbbf24) !important;
+  height: 3px !important;
+}
+
+.Toastify__close-button {
+  color: var(--text-secondary) !important;
+  opacity: 0.7 !important;
+  transition: all 0.2s !important;
+}
+
+.Toastify__close-button:hover {
+  opacity: 1 !important;
+  color: #ea580c !important;
+}
+
+/* Custom icons coloring */
+.Toastify__toast--success .Toastify__toast-icon svg { fill: #22c55e !important; }
+.Toastify__toast--error .Toastify__toast-icon svg { fill: #ef4444 !important; }
+.Toastify__toast--info .Toastify__toast-icon svg { fill: #3b82f6 !important; }
+.Toastify__toast--warning .Toastify__toast-icon svg { fill: #f59e0b !important; }

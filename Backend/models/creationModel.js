@@ -47,7 +47,7 @@ creationSchema.index({ tags: 1 });
 creationSchema.index({ toolType: 1 });
 creationSchema.index({ isPublic: 1 });
 creationSchema.index({ style: 1 });
-creationSchema.index({ slug: 1 });
+
 
 const creationModel = mongoose.models.creation || mongoose.model("creation", creationSchema);
 export default creationModel;

@@ -150,12 +150,12 @@ const Navbar = () => {
                         </div>
                     ) : (
                         <div className='flex items-center gap-3'>
-                            <Link to="/gallery" className='text-sm font-semibold px-4 py-2 rounded-xl transition-all hover:bg-orange-500/10 hover:text-orange-500' style={{ color: 'var(--text-secondary)' }}>
+                            <button onClick={() => setShowLogin(true)} className='text-sm font-semibold px-4 py-2 rounded-xl transition-all hover:bg-orange-500/10 hover:text-orange-500' style={{ color: 'var(--text-secondary)' }}>
                                 Gallery
-                            </Link>
-                            <Link to="/studio" className='text-sm font-semibold px-4 py-2 rounded-xl transition-all hover:bg-orange-500/10 hover:text-orange-500' style={{ color: 'var(--text-secondary)' }}>
+                            </button>
+                            <button onClick={() => setShowLogin(true)} className='text-sm font-semibold px-4 py-2 rounded-xl transition-all hover:bg-orange-500/10 hover:text-orange-500' style={{ color: 'var(--text-secondary)' }}>
                                 Studio
-                            </Link>
+                            </button>
 
                             {/* Theme Toggle */}
                             <button
@@ -201,8 +201,16 @@ const Navbar = () => {
                     className="md:hidden border-t px-4 py-4 flex flex-col gap-2"
                     style={{ background: 'var(--navbar-bg)', borderColor: 'var(--border-subtle)' }}
                 >
-                    <Link to="/gallery" className="px-4 py-3 rounded-xl text-sm font-semibold transition-all hover:bg-orange-500/10" style={{ color: 'var(--text-primary)' }} onClick={() => setMobileMenuOpen(false)}>Gallery</Link>
-                    <Link to="/studio" className="px-4 py-3 rounded-xl text-sm font-semibold transition-all hover:bg-orange-500/10" style={{ color: 'var(--text-primary)' }} onClick={() => setMobileMenuOpen(false)}>Studio</Link>
+                    {user ? (
+                        <Link to="/gallery" className="px-4 py-3 rounded-xl text-sm font-semibold transition-all hover:bg-orange-500/10" style={{ color: 'var(--text-primary)' }} onClick={() => setMobileMenuOpen(false)}>Gallery</Link>
+                    ) : (
+                        <button onClick={() => { setShowLogin(true); setMobileMenuOpen(false); }} className="text-left px-4 py-3 rounded-xl text-sm font-semibold transition-all hover:bg-orange-500/10" style={{ color: 'var(--text-primary)' }}>Gallery</button>
+                    )}
+                    {user ? (
+                        <Link to="/studio" className="px-4 py-3 rounded-xl text-sm font-semibold transition-all hover:bg-orange-500/10" style={{ color: 'var(--text-primary)' }} onClick={() => setMobileMenuOpen(false)}>Studio</Link>
+                    ) : (
+                        <button onClick={() => { setShowLogin(true); setMobileMenuOpen(false); }} className="text-left px-4 py-3 rounded-xl text-sm font-semibold transition-all hover:bg-orange-500/10" style={{ color: 'var(--text-primary)' }}>Studio</button>
+                    )}
                     {user ? (
                         <>
                             <Link to="/profile"   className="px-4 py-3 rounded-xl text-sm font-semibold transition-all hover:bg-orange-500/10" style={{ color: 'var(--text-primary)' }} onClick={() => setMobileMenuOpen(false)}>My Profile</Link>

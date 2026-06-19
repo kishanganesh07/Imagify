@@ -82,48 +82,10 @@ const Gallery = () => {
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.5 }}
                 >
-                    Community Gallery <Sparkles className="w-6 h-6 text-orange-500 dark:text-orange-400"/>
+                    Community Gallery 
                 </motion.h1>
                 
-                <motion.div 
-                    className="flex flex-wrap items-center gap-3 w-full md:w-auto"
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.5, delay: 0.2 }}
-                >
-                    <div className="relative flex-1 md:w-72">
-                        <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--text-secondary)]" />
-                        <input 
-                            type="text" 
-                            placeholder="Search prompts..." 
-                            value={search}
-                            onChange={(e) => setSearch(e.target.value)}
-                            className="w-full pl-10 pr-4 py-3 rounded-full glass-input text-sm placeholder-[var(--text-muted)]"
-                        />
-                    </div>
-                    <div className="relative">
-                        <select value={style} onChange={(e) => setStyle(e.target.value)} className="py-3 pl-5 pr-10 rounded-full glass-input text-sm appearance-none cursor-pointer">
-                            <option value="" className="bg-[var(--bg-secondary)] text-[var(--text-primary)]">All Styles</option>
-                            <option value="cinematic" className="bg-[var(--bg-secondary)] text-[var(--text-primary)]">Cinematic</option>
-                            <option value="anime" className="bg-[var(--bg-secondary)] text-[var(--text-primary)]">Anime</option>
-                            <option value="cyberpunk" className="bg-[var(--bg-secondary)] text-[var(--text-primary)]">Cyberpunk</option>
-                        </select>
-                        <div className="absolute inset-y-0 right-4 flex items-center pointer-events-none text-[var(--text-secondary)]">
-                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
-                        </div>
-                    </div>
-                    <div className="relative">
-                        <select value={toolType} onChange={(e) => setToolType(e.target.value)} className="py-3 pl-5 pr-10 rounded-full glass-input text-sm appearance-none cursor-pointer">
-                            <option value="" className="bg-[var(--bg-secondary)] text-[var(--text-primary)]">All Tools</option>
-                            <option value="text-to-image" className="bg-[var(--bg-secondary)] text-[var(--text-primary)]">Text to Image</option>
-                            <option value="image-to-image" className="bg-[var(--bg-secondary)] text-[var(--text-primary)]">Image to Image</option>
-                            <option value="bg-removal" className="bg-[var(--bg-secondary)] text-[var(--text-primary)]">BG Removal</option>
-                        </select>
-                        <div className="absolute inset-y-0 right-4 flex items-center pointer-events-none text-[var(--text-secondary)]">
-                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
-                        </div>
-                    </div>
-                </motion.div>
+
             </div>
 
             <div className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-6 space-y-6">
